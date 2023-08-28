@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>My-Ecommerce</title>
+        <title>My Ecommerce</title>
       </Head>
 
       <main className="layout">
