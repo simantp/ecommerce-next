@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res) => {
   const data = await User.find();
@@ -15,14 +16,18 @@ const getUsersByID = async (req, res) => {
 const loginUser = async (req, res) => {
   const userExists = await User.findOne({ email: req.body.email });
   if (!userExists) {
-    return res.status(404).json();
+    return res.status(404).json({ msg: "User Not Found" });
   } else {
     const isMatched = await bcrypt.compare(
       req.body.password,
       userExists.password
     );
     if (isMatched) {
-      res.status(200).json({ msg: "logged In" });
+      var token = await jwt.sign(
+        { email: req.body.email },
+        process.env.SECRET_KEY
+      );
+      res.status(200).json({ isLoggedIn: true, msg: "Logged In", token });
     } else {
       res.status(404).json({ msg: "Not Matched" });
     }
