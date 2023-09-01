@@ -1,87 +1,66 @@
-import React from "react";
-// import { Dialog} from '@headlessui/react'
-// import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
-//import { FaShoppingCart } from 'react-icons/Fa'
 import { RiShoppingBag3Fill } from "react-icons/ri";
+import Image from "next/image";
 
 function Header() {
-  //   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
     <header className="bg-white border-b border-b-grey-300">
-      <nav className="layout flex items-center justify-between p-6 lg:px-8">
+      {/* Top Nav */}
+      <div className="layout flex items-center justify-between p-6 lg:px-8">
         <div>
           <Link
             href="/"
             className="flex items-center gap-2 text-secondary text-xl font-semibold"
           >
-            {/* <FaShoppingCart fontSize={26}/> */}
-            <span>PrintMyDTF</span>
+            <Image
+              src="/images/logo.png"
+              width={150}
+              height={40}
+              objectfit="contain"
+              className="cursor-pointer mr-5"
+            />
           </Link>
         </div>
 
         <div className="hidden lg:flex">
           <div className="join w-[30rem]">
             <input
-              className="input w-full imput-sm input-bordered join-item"
+              className="input w-full imput-sm input-bordered"
               placeholder="Search"
             />
-            <div className="indicator">
-              <button className="btn join-item">Search</button>
-            </div>
           </div>
         </div>
-
-        {/* <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div> */}
 
         <div>
           <Link href="/cart">
-            <RiShoppingBag3Fill fontSize={30} />
+            <RiShoppingBag3Fill className="h-10 text-4xl" />
           </Link>
         </div>
-      </nav>
-
-      {/* <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-        <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          
-          <div className="flex items-center justify-end">
-            
-            <button
-              type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
+      </div>
+      {/* bottom nav */}
+      <div className="bg-theme_blue-light">
+        <div className="layout flex justify-between">
+          <div className="flex justify-start text-white items-center text-xs sm:text-base space-x-5 p-2 pl-6">
+            <p className="link">All Products</p>
+            <p className="link">About</p>
+            <p className="link">Sale</p>
+            <p className="link hidden lg:inline-flex">Process</p>
+            <p className="link hidden lg:inline-flex">How to Order</p>
           </div>
-
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div>
+          {/* right */}
+          <div className="text-white items-center">
+            <div className="flex justify-center items-center text-xs sm:text-base space-x-5 p-2 pl-6">
+              <Link href="/signin">
+                <p className="link">Sign In</p>
+              </Link>
+              <p className="hidden lg:inline-flex">
+                Hello Simant - <span className="link"> Sign Out</span>
+              </p>
+              <p className="link font-extrabold">Account</p>
             </div>
           </div>
-        </Dialog.Panel>
-      </Dialog> */}
+        </div>
+      </div>
     </header>
   );
 }
