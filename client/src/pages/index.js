@@ -1,6 +1,6 @@
-import Head from "next/head";
 import ProductFeed from "./components/ProductFeed";
 import Banner from "./components/Banner";
+import Head from "next/head";
 
 export default function Home({ products }) {
   return (
@@ -11,7 +11,9 @@ export default function Home({ products }) {
 
       <main className="max-w-screen-2xl mx-auto">
         {/* Banner */}
+
         <Banner />
+
         {/* Product Feed */}
         <ProductFeed products={products} />
       </main>

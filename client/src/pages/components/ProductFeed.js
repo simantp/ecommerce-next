@@ -1,4 +1,4 @@
-const { default: Product } = require("./Product");
+import Product from "./Product";
 
 function ProductFeed({ products }) {
   return (
