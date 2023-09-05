@@ -1,8 +1,28 @@
 import Link from "next/link";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/reducerSlices/userSlice";
+import { useToast } from "@chakra-ui/react";
 
 function Header() {
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const logOut = () => {
+    const logoutData = {
+      msg: "You have been logged out.",
+    };
+
+    dispatch(logout(logoutData));
+
+    toast({
+      title: logoutData.msg,
+      status: "warning",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
   return (
     <header className="bg-white border-b border-b-grey-300">
       {/* Top Nav */}
@@ -50,13 +70,19 @@ function Header() {
           {/* right */}
           <div className="text-white items-center">
             <div className="flex justify-center items-center text-xs sm:text-base space-x-5 p-2 pl-6">
-              <Link href="/signin">
-                <p className="link">Sign In</p>
-              </Link>
-              <p className="hidden lg:inline-flex">
-                Hello Simant - <span className="link"> Sign Out</span>
-              </p>
-              <p className="link font-extrabold">Account</p>
+              {!isLoggedIn ? (
+                <Link href="/signin">
+                  <p className="link">Sign In</p>
+                </Link>
+              ) : (
+                <p className="hidden lg:inline-flex">
+                  Hello Simant -{" "}
+                  <span onClick={logOut} className="link">
+                    {" "}
+                    Sign Out
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         </div>

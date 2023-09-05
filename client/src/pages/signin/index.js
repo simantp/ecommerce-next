@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@chakra-ui/react";
+import { setLoginDetails } from "../../redux/reducerSlices/userSlice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -12,6 +15,9 @@ const SignInSchema = Yup.object().shape({
 });
 
 export default function Signin() {
+  const toast = useToast();
+  const router = useRouter();
+  const dispatch = useDispatch();
   const handleSignin = async (values) => {
     const res = await fetch("http://localhost:3005/signin", {
       method: "POST",
@@ -19,18 +25,19 @@ export default function Signin() {
       body: JSON.stringify(values),
     });
     const data = await res.json();
-    // if(res.status==200 && data){
 
-    // }
+    if (data.isLoggedIn) {
+      dispatch(setLoginDetails(data));
+      router.push("/");
+    }
 
     toast({
       title: data.msg,
       status: res.status == 404 ? "warning" : "success",
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
     });
   };
-  const toast = useToast();
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
