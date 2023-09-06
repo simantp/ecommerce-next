@@ -2,16 +2,18 @@ import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "./Layout";
 import { Provider } from "react-redux";
-import store from "../redux/store/index";
-``;
+import { store, persistor } from "../redux/store/index";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <PersistGate loading={null} persistor={persistor}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </PersistGate>
       </Provider>
     </ChakraProvider>
   );
