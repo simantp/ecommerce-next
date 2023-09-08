@@ -4,6 +4,11 @@ import * as Yup from "yup";
 import { useToast } from "@chakra-ui/react";
 
 const RegisterSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  phoneNumber: Yup.number().required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .min(2, "Too Short!")
@@ -41,6 +46,8 @@ export default function Register() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <Formik
             initialValues={{
+              name: "",
+              phoneNumber: "",
               email: "",
               password: "",
             }}
@@ -53,6 +60,27 @@ export default function Register() {
             {({ errors, touched }) => (
               <Form className="space-y-6" method="post">
                 <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                    Name
+                  </label>
+                  <Field
+                    name="name"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {errors.name && touched.name ? (
+                    <div>{errors.name}</div>
+                  ) : null}
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                    Phone Number
+                  </label>
+                  <Field
+                    name="phoneNumber"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {errors.phoneNumber && touched.phoneNumber ? (
+                    <div>{errors.phoneNumber}</div>
+                  ) : null}
+
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Email
                   </label>

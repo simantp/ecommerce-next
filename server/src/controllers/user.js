@@ -27,7 +27,12 @@ const loginUser = async (req, res) => {
         { email: req.body.email },
         process.env.SECRET_KEY
       );
-      res.status(200).json({ isLoggedIn: true, msg: "Logged In", token });
+      res.status(200).json({
+        isLoggedIn: true,
+        msg: "Logged In",
+        token,
+        userInfo: userExists,
+      });
     } else {
       res.status(404).json({ msg: "Not Matched" });
     }

@@ -26,6 +26,7 @@ const userSlice = createSlice({
         token: null,
         isLoggedIn: false,
         userInfo: null,
+        userInfoWithoutPassword: null,
       };
     },
   },

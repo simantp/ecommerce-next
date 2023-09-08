@@ -4,8 +4,10 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducerSlices/userSlice";
 import { useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 function Header() {
+  const router = useRouter();
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const toast = useToast();
@@ -76,7 +78,13 @@ function Header() {
                 </Link>
               ) : (
                 <p className="hidden lg:inline-flex">
-                  Hello Simant -{" "}
+                  <span
+                    className="cursor-pointer link"
+                    onClick={() => router.push("/account")}
+                  >
+                    Account
+                  </span>{" "}
+                  -{" "}
                   <span onClick={logOut} className="link">
                     {" "}
                     Sign Out
