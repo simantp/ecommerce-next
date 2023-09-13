@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 import EditAccount from "../components/EditAccount";
 
-const Account = () => {
-  const { userInfoWithoutPassword } = useSelector((state) => state.user);
+function Account() {
+  const { userDetails } = useSelector((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -28,24 +28,9 @@ const Account = () => {
             >
               Edit
             </a>
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalCloseButton />
-                <ModalBody>
-                  <EditAccount />
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
-                    Save
-                  </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
           </div>
 
-          <span className="text-gray-600">{userInfoWithoutPassword.name}</span>
+          <span className="text-gray-600">{userDetails.userName}</span>
           <div className="w-full p-8 mx-2 flex justify-center">
             <img
               id="showImage"
@@ -53,14 +38,27 @@ const Account = () => {
               src="../images/avatar.svg"
               alt=""
             />
+            <input onChange={(e) => console.log(e)} type="file" />
           </div>
         </div>
+
+        {isOpen && (
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalCloseButton />
+              <ModalBody>
+                <EditAccount />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        )}
 
         <div className="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
           <div className="rounded  shadow p-6">
             <div className="pb-4">
               <label
-                for="name"
+                htmlFor="name"
                 className="font-semibold text-gray-700 block pb-1"
               >
                 Phone Number
@@ -68,12 +66,12 @@ const Account = () => {
               <input
                 disabled
                 className="border-1  rounded-r px-4 py-2 w-full"
-                value={userInfoWithoutPassword.phoneNumber}
+                value={userDetails.phoneNumber}
               />
               <span className="text-gray-600 pt-4 block opacity-70"></span>
 
               <label
-                for="email"
+                htmlFor="email"
                 className="font-semibold text-gray-700 block pb-1"
               >
                 Email
@@ -83,7 +81,7 @@ const Account = () => {
                 id="email"
                 className="border-1  rounded-r px-4 py-2 w-full"
                 type="email"
-                value={userInfoWithoutPassword.email}
+                value={userDetails.email}
               />
               <span className="text-gray-600 pt-4 block opacity-70"></span>
             </div>
@@ -92,6 +90,6 @@ const Account = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Account;
