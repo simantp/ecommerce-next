@@ -3,14 +3,31 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-const getUsers = async (req, res) => {
-  const data = await User.find();
-  res.json({ data });
+const uploadImage = async (req, res) => {
+  if (req.file?.filename) {
+    await User.findByIdAndUpdate(req.params.id, {
+      $set: { avatarImage: req.file?.filename },
+    });
+  }
+  res.json({
+    msg: "image uploaded",
+  });
+};
+const getUserImage = async (req, res) => {
+  console.log(req.params);
+};
+const getUserByID = async (req, res) => {
+  const data = await User.findById(req.params.id);
+  if (data) {
+    res.json({ userDetails: data });
+  }
 };
 
-const getUsersByID = async (req, res) => {
-  const data = await User.findById(req.params.id);
-  res.json({ data });
+const updateUsersByID = async (req, res) => {
+  const data = await User.findByIdAndUpdate(req.params.id, req.body);
+  if (data) {
+    res.json({ msg: "User Updated" });
+  }
 };
 
 const loginUser = async (req, res) => {
@@ -57,25 +74,11 @@ const registerNewUser = async (req, res) => {
   }
 };
 
-const editUserById = async (req, res) => {
-  const data = await User.findByIdAndUpdate(req.params.id, req.body);
-  if (data) {
-    res.json({ msg: "User Edited" });
-  }
-};
-
-const deleteUserById = async (req, res) => {
-  const data = await User.findByIdAndDelete(req.params.id);
-  if (data) {
-    res.json({ msg: "User Deleted" });
-  }
-};
-
 module.exports = {
   registerNewUser,
-  editUserById,
-  getUsers,
-  deleteUserById,
-  getUsersByID,
+  getUserByID,
   loginUser,
+  updateUsersByID,
+  uploadImage,
+  getUserImage,
 };

@@ -16,6 +16,19 @@ function Account() {
   const { userDetails } = useSelector((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const uploadUserImage = async (file) => {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const res = await fetch(
+      "http://localhost:3005/user-image/" + userDetails._id,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await res.json();
+  };
+
   return (
     <div className="layout h-full">
       <div className="border-b-2 block md:flex">
@@ -38,21 +51,22 @@ function Account() {
               src="../images/avatar.svg"
               alt=""
             />
-            <input onChange={(e) => console.log(e)} type="file" />
+            <input
+              onChange={(e) => uploadUserImage(e.target.files[0])}
+              type="file"
+            />
           </div>
         </div>
 
-        {isOpen && (
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalCloseButton />
-              <ModalBody>
-                <EditAccount />
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        )}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>
+              <EditAccount onClose={onClose} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
 
         <div className="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
           <div className="rounded  shadow p-6">
