@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -15,6 +16,7 @@ const SignInSchema = Yup.object().shape({
 });
 
 export default function Signin() {
+  const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -76,28 +78,41 @@ export default function Signin() {
                       <div>{errors.email}</div>
                     ) : null}
                   </div>
-                  <div className="flex mt-2 mb-2 items-center justify-between">
-                    <label
-                      htmlFor="password"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Password
-                    </label>
-                    <div className="text-sm flex justify-center">
-                      <Link
-                        href="#"
-                        className="font-semibold text-slate-800 hover:text-slate-600"
+
+                  <div className="relative">
+                    <div className="mt-2 flex items-center justify-between">
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Forgot password?
-                      </Link>
+                        Password
+                      </label>
+                      <div className="text-sm flex justify-center">
+                        <Link
+                          href="#"
+                          className="font-semibold text-slate-800 hover:text-slate-600"
+                        >
+                          Forgot password?
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="mt-2 relative rounded-md py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400  focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <div>
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          className="w-full pr-12 border-none"
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-0 p-2 text-slate-800 hover:text-slate-600"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </button>
+                      </div>
                     </div>
                   </div>
-
-                  <Field
-                    type="password"
-                    name="password"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
                   {errors.password && touched.password ? (
                     <div>{errors.password}</div>
                   ) : null}

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -17,6 +18,7 @@ const RegisterSchema = Yup.object().shape({
 });
 
 export default function Register() {
+  const [showPassword, setShowPassword] = useState(false);
   const handleRegister = async (values) => {
     const res = await fetch("http://localhost:3005/register", {
       method: "POST",
@@ -93,14 +95,31 @@ export default function Register() {
                       <div>{errors.email}</div>
                     ) : null}
                   </div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                  <Field
-                    type="password"
-                    name="password"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  <div className="relative">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Password
+                    </label>
+
+                    <div className="mt-2 relative rounded-md py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400  focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <div>
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          className="w-full pr-12 border-none"
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-0 p-2 text-slate-800 hover:text-slate-600"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   {errors.password && touched.password ? (
                     <div>{errors.password}</div>
                   ) : null}
