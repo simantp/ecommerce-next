@@ -20,7 +20,7 @@ function Banner() {
             loading="lazy"
             src="/images/banner1.png"
             width={1200}
-            height={100}
+            height={128}
             alt="banner1"
           />
         </div>
@@ -29,7 +29,7 @@ function Banner() {
             loading="lazy"
             src="/images/banner2.png"
             width={1200}
-            height={100}
+            height={128}
             alt="banner2"
           />
         </div>
@@ -38,7 +38,7 @@ function Banner() {
             loading="lazy"
             src="/images/banner3.png"
             width={1200}
-            height={100}
+            height={128}
             alt="banner3"
           />
         </div>

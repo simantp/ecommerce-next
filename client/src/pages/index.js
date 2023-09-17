@@ -1,4 +1,4 @@
-import ProductFeed from "./components/ProductFeed";
+import ProductCard from "./components/ProductCard";
 import Banner from "./components/Banner";
 import Head from "next/head";
 
@@ -14,8 +14,12 @@ export default function Home({ products }) {
 
         <Banner />
 
-        {/* Product Feed */}
-        <ProductFeed products={products} />
+        {/* Product Card */}
+        <div className="flex flex-wrap p-10 justify-center mt-10">
+          {products.map((product) => (
+            <ProductCard product={product} key={product._id} />
+          ))}
+        </div>
       </main>
     </div>
   );

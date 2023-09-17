@@ -12,8 +12,12 @@ USER
 2. Upload Files
 3. Payment
 4. Checkout
-   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/images/4.png)
-   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/images/5.png)
-   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/images/1.png)
-   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/images/2.png)
-   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/images/3.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/1.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/2.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/3.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/4.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/5.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/6.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/7.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/8.png)
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/9.png)

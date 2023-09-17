@@ -10,6 +10,7 @@ function Header() {
   const router = useRouter();
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { userDetails } = useSelector((state) => state.user);
   const toast = useToast();
   const logOut = () => {
     const logoutData = {
@@ -53,9 +54,23 @@ function Header() {
           </div>
         </div>
 
-        <div>
+        <div className="flex items-center">
+          {isLoggedIn ? (
+            <div className=" w-8 h-8 rounded-full overflow-hidden border">
+              <Image
+                className="object-cover w-full h-full cursor-pointer link"
+                src={"http://localhost:3005/user-image/" + userDetails._id}
+                width={32}
+                height={32}
+                alt="User Image"
+                onClick={() => router.push("/account")}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <Link href="/cart">
-            <RiShoppingBag3Fill className="h-10 text-4xl" />
+            <RiShoppingBag3Fill className="h-8 text-4xl" />
           </Link>
         </div>
       </div>
@@ -79,13 +94,12 @@ function Header() {
               ) : (
                 <p className="hidden lg:inline-flex">
                   <span
-                    className="cursor-pointer link"
-                    onClick={() => router.push("/account")}
+                    onClick={() => {
+                      dispatch(logout());
+                      router.push("/");
+                    }}
+                    className="link"
                   >
-                    Account
-                  </span>{" "}
-                  -{" "}
-                  <span onClick={logOut} className="link">
                     {" "}
                     Sign Out
                   </span>

@@ -6,6 +6,12 @@ const nextConfig = {
 module.exports = nextConfig;
 module.exports = {
   images: {
-    domains: ["fakestoreapi.com"],
+    domains: [
+      "fakestoreapi.com",
+      "localhost",
+      "images.unsplash.com",
+      "res.cloudinary.com",
+      "unsplash.com",
+    ],
   },
 };

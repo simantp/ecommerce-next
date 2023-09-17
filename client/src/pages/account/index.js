@@ -11,6 +11,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import EditAccount from "../components/EditAccount";
+import Image from "next/image";
 
 function Account() {
   const { userDetails } = useSelector((state) => state.user);
@@ -44,17 +45,22 @@ function Account() {
           </div>
 
           <span className="text-gray-600">{userDetails.userName}</span>
-          <div className="w-full p-8 mx-2 flex justify-center">
-            <img
-              id="showImage"
-              className="max-w-xs w-32 items-center border"
-              src="../images/avatar.svg"
-              alt=""
-            />
-            <input
-              onChange={(e) => uploadUserImage(e.target.files[0])}
-              type="file"
-            />
+          <div className="w-full p-8 mx-2 justify-center">
+            <div className="w-32 h-32 rounded-full overflow-hidden border">
+              <Image
+                className="object-cover w-full h-full"
+                src={"http://localhost:3005/user-image/" + userDetails._id}
+                width={50}
+                height={50}
+                alt="User Image"
+              />
+            </div>
+            <div>
+              <input
+                onChange={(e) => uploadUserImage(e.target.files[0])}
+                type="file"
+              />
+            </div>
           </div>
         </div>
 

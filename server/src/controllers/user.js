@@ -2,6 +2,8 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const fs = require("fs");
 
 const uploadImage = async (req, res) => {
   if (req.file?.filename) {
@@ -13,9 +15,36 @@ const uploadImage = async (req, res) => {
     msg: "image uploaded",
   });
 };
+
 const getUserImage = async (req, res) => {
-  console.log(req.params);
+  try {
+    const userInfo = await User.findById(req.params.id);
+
+    if (!userInfo) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const imagePath = path.join(
+      __dirname,
+      "../../uploads/users",
+      userInfo.avatarImage
+    );
+
+    if (fs.existsSync(imagePath)) {
+      res.sendFile(imagePath);
+    } else {
+      const defaultImagePath = path.join(
+        __dirname,
+        "../../uploads/users/avatar.svg"
+      );
+      res.sendFile(defaultImagePath);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
+
 const getUserByID = async (req, res) => {
   const data = await User.findById(req.params.id);
   if (data) {

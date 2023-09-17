@@ -25,11 +25,7 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       return {
-        ...state,
-        token: null,
-        isLoggedIn: false,
-        userInfo: null,
-        userDetails: null,
+        ...initialState,
       };
     },
   },
