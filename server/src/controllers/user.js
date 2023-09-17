@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
@@ -18,10 +19,27 @@ const uploadImage = async (req, res) => {
 
 const getUserImage = async (req, res) => {
   try {
-    const userInfo = await User.findById(req.params.id);
+    const userId = req.params.id;
+
+    // Check if userId is defined and is a valid ObjectId
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    const userInfo = await User.findById(userId);
 
     if (!userInfo) {
       return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if userInfo.avatarImage is a valid string
+    if (
+      typeof userInfo.avatarImage !== "string" ||
+      userInfo.avatarImage.trim() === ""
+    ) {
+      return res
+        .status(404)
+        .json({ error: "Avatar image not found for the user" });
     }
 
     const imagePath = path.join(
@@ -31,17 +49,11 @@ const getUserImage = async (req, res) => {
     );
 
     if (fs.existsSync(imagePath)) {
-      res.sendFile(imagePath);
-    } else {
-      const defaultImagePath = path.join(
-        __dirname,
-        "../../uploads/users/avatar.svg"
-      );
-      res.sendFile(defaultImagePath);
+      return res.sendFile(imagePath);
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 

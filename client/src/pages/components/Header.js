@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducerSlices/userSlice";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import logo from "../../../public/images/logo.png";
 
 function Header() {
   const router = useRouter();
@@ -17,15 +18,21 @@ function Header() {
       msg: "You have been logged out.",
     };
 
-    dispatch(logout(logoutData));
-
-    toast({
-      title: logoutData.msg,
-      status: "warning",
-      duration: 5000,
-      isClosable: true,
+    dispatch(logout(logoutData)).catch((error) => {
+      console.error(error);
+      // Display an error message to the user.
+      toast({
+        title: "Logout Failed",
+        description: "An error occurred while logging out.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     });
   };
+  const avatarImageUrl = userDetails.avatarImage
+    ? "http://localhost:3005/user-image/" + userDetails._id
+    : "http://localhost:3000/images/defaultImg.png";
   return (
     <header className="bg-white border-b border-b-grey-300">
       {/* Top Nav */}
@@ -36,7 +43,7 @@ function Header() {
             className="flex items-center gap-2 text-secondary text-xl font-semibold"
           >
             <Image
-              src="/images/logo.png"
+              src={"/images/logo.png"}
               width={150}
               height={40}
               objectfit="contain"
@@ -59,7 +66,7 @@ function Header() {
             <div className=" w-8 h-8 rounded-full overflow-hidden border">
               <Image
                 className="object-cover w-full h-full cursor-pointer link"
-                src={"http://localhost:3005/user-image/" + userDetails._id}
+                src={avatarImageUrl}
                 width={32}
                 height={32}
                 alt="User Image"

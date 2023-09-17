@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import EditAccount from "../components/EditAccount";
 import Image from "next/image";
+import logo from "../../../public/images/logo.png";
 
 function Account() {
   const { userDetails } = useSelector((state) => state.user);
@@ -29,6 +30,10 @@ function Account() {
     );
     const data = await res.json();
   };
+
+  const avatarImageUrl = userDetails.avatarImage
+    ? "http://localhost:3005/user-image/" + userDetails._id
+    : "http://localhost:3000/images/defaultImg.png";
 
   return (
     <div className="layout h-full">
@@ -49,7 +54,7 @@ function Account() {
             <div className="w-32 h-32 rounded-full overflow-hidden border">
               <Image
                 className="object-cover w-full h-full"
-                src={"http://localhost:3005/user-image/" + userDetails._id}
+                src={avatarImageUrl}
                 width={50}
                 height={50}
                 alt="User Image"

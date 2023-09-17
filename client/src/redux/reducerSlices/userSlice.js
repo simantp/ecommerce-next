@@ -4,6 +4,7 @@ export const initialState = {
   token: "",
   userDetails: {},
   isLoggedIn: false,
+  avatarImage: {},
 };
 
 const userSlice = createSlice({
