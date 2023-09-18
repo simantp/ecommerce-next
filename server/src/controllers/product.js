@@ -1,39 +1,33 @@
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const Product = require("../models/product");
 const path = require("path");
-const fs = require("fs");
-
-const uploadProductImage = async (req, res) => {
-  if (req.file?.filename) {
-    await Product.findByIdAndUpdate(req.params.id, {
-      $set: { featuredImage: req.file?.filename },
-    });
-  }
-  res.json({
-    msg: "image uploaded",
-  });
-};
-
-const getProductImage = async (req, res) => {
-  const imagePath = path.join(
-    __dirname,
-    "../../uploads/products",
-    featuredImage
-  );
-
-  if (fs.existsSync(imagePath)) {
-    res.sendFile(imagePath);
-  } else {
-    const defaultImagePath = path.join(
-      __dirname,
-      "../../uploads/users/avatar.svg"
-    );
-    res.sendFile(defaultImagePath);
-  }
-};
 
 const addNewProduct = async (req, res) => {
-  const product = await Product.create(req.body);
-  return res.json({ product, msg: "New Product Added" });
+  if (!ObjectId.isValid(req.body.category)) {
+    return res.status(400).json({ error: "Invalid category ID" });
+  }
+
+  try {
+    const imageUrl = `/uploads/products/${req.file.filename}`;
+
+    const { name, description, price, slug, category } = req.body;
+
+    const newProduct = {
+      name,
+      description,
+      price,
+      slug,
+      category,
+      productImage: imageUrl,
+    };
+
+    const product = await Product.create(newProduct);
+    return res.json({ product, msg: "New Product Added" });
+  } catch (error) {
+    console.error("Error creating product:", error);
+    return res.status(500).json({ error: "Failed to create product" });
+  }
 };
 
 const getProducts = async (req, res) => {
@@ -53,6 +47,4 @@ module.exports = {
   addNewProduct,
   getProducts,
   getProduct,
-  uploadProductImage,
-  getProductImage,
 };

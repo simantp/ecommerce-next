@@ -3,9 +3,12 @@ const express = require("express");
 const router = express.Router();
 const ProductController = require("../controllers/product");
 const multer = require("multer");
+const fs = require("fs");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/products/");
+    const uploadDir = "uploads/products";
+    fs.mkdirSync(uploadDir, { recursive: true });
+    cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
     const imageName = Math.floor(Math.random() * 1000) + file.originalname;
@@ -15,15 +18,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+//router.get("/product-image/:id", ProductController.getProductImage);
+
 router.post(
-  "/product-image/:id",
-  upload.single("avatar"),
-  ProductController.uploadProductImage
+  "/products",
+  upload.single("productImage"),
+  ProductController.addNewProduct
 );
 
-router.get("/product-image/:id", ProductController.getProductImage);
-
-router.post("/products", ProductController.addNewProduct);
 router.get("/products", ProductController.getProducts);
 router.get("/product/:id", ProductController.getProduct);
 
