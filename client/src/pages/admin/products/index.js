@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 function allProducts() {
   const [productList, setProductList] = useState([]);
@@ -48,11 +49,14 @@ function allProducts() {
                   <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Product Name
                   </th>
-                  <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
+                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Category
                   </th>
-                  <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
+                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Price
+                  </th>
+                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -60,7 +64,12 @@ function allProducts() {
                 <tbody className="divide-y divide-gray-100" key={item._id}>
                   <tr className="bg-white">
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      <img src="/images/logo.png" alt="product img" />
+                      <Image
+                        src={item.productImagePath}
+                        alt="Product Image"
+                        width={100}
+                        height={100}
+                      />
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {item.name}
@@ -72,6 +81,10 @@ function allProducts() {
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       ${item.price}
+                    </td>
+                    <td className="p-3 text-gray-700 whitespace-nowrap">
+                      <p>Edit</p>
+                      <p>Delete</p>
                     </td>
                   </tr>
                 </tbody>

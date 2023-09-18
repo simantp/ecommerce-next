@@ -29,6 +29,9 @@ function allCategories() {
                   <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Slug
                   </th>
+                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               {categoryList.map((item) => (
@@ -40,6 +43,14 @@ function allCategories() {
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
                         {item.slug}
+                      </span>
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
+                        Edit
+                      </span>
+                      <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
+                        Delete
                       </span>
                     </td>
                   </tr>

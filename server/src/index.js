@@ -13,6 +13,7 @@ app.use(cors());
 const connect = require("./db/connect");
 connect();
 
+app.use("/uploads", express.static("uploads"));
 app.use(UserRoute);
 app.use(ProductRoute);
 app.use(CategoryRoute);

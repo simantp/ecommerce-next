@@ -18,8 +18,16 @@ const getCategory = async (req, res) => {
   return res.json(category);
 };
 
+const editCategory = async (req, res) => {
+  const data = await Category.findByIdAndUpdate(req.params.id, req.body);
+  if (data) {
+    res.json({ msg: "Category Updated" });
+  }
+};
+
 module.exports = {
   addNewCategory,
   getCategories,
   getCategory,
+  editCategory,
 };

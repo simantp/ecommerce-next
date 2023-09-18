@@ -12,9 +12,10 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    productImage: {
+    productImageFilename: {
       type: String,
     },
+    productImagePath: String,
     price: {
       type: Number,
       required: true,

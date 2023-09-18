@@ -19,11 +19,17 @@ const addNewProduct = async (req, res) => {
       price,
       slug,
       category,
-      productImage: imageUrl,
+      productImageFilename: req.file.filename,
+      productImagePath: `http://localhost:3005${imageUrl}`,
     };
 
     const product = await Product.create(newProduct);
-    return res.json({ product, msg: "New Product Added" });
+    const productWithImageUrl = {
+      ...product.toObject(),
+      productImageUrl: imageUrl,
+    };
+
+    return res.json({ product: productWithImageUrl, msg: "New Product Added" });
   } catch (error) {
     console.error("Error creating product:", error);
     return res.status(500).json({ error: "Failed to create product" });
