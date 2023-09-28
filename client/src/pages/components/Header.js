@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducerSlices/userSlice";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import logo from "../../../public/images/logo.png";
 
 function Header() {
   const router = useRouter();
-  const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { userDetails } = useSelector((state) => state.user);
+  const { cartList } = useSelector((state) => state.product);
+
   const toast = useToast();
   const logOut = () => {
     const logoutData = {
@@ -76,8 +77,14 @@ function Header() {
           ) : (
             ""
           )}
-          <Link href="/cart">
+          <Link
+            href={"/cart"}
+            className="flex items-center  cursor-pointer duration-300 relative"
+          >
             <RiShoppingBag3Fill className="h-8 text-4xl" />
+            <span className="absolute bg-black text-white right-2.5 text-center h-4 w-4 text-sm font-bold">
+              {cartList ? cartList.length : 0}
+            </span>
           </Link>
         </div>
       </div>

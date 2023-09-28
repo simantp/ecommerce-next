@@ -72,7 +72,7 @@ function allProducts() {
                       />
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {item.name}
+                      {item.title}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">

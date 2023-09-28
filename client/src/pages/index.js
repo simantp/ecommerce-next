@@ -2,7 +2,7 @@ import ProductCard from "./components/ProductCard";
 import Banner from "./components/Banner";
 import Head from "next/head";
 
-export default function Home({ products }) {
+export default function Home({ productData }) {
   return (
     <div>
       <Head>
@@ -16,22 +16,19 @@ export default function Home({ products }) {
 
         {/* Product Card */}
         <div className="flex flex-wrap p-10 justify-center mt-10">
-          {products.map((product) => (
-            <ProductCard product={product} key={product._id} />
-          ))}
+          <ProductCard productData={productData} />
         </div>
       </main>
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
-  const products = await fetch("http://localhost:3005/products").then((res) =>
-    res.json()
-  );
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3005/products");
+  const productData = await res.json();
   return {
     props: {
-      products,
+      productData,
     },
   };
 }

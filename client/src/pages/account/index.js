@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import EditAccount from "../components/EditAccount";
 import Image from "next/image";
-import logo from "../../../public/images/logo.png";
 
 function Account() {
   const { userDetails } = useSelector((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [userImage, setUserImage] = useState(null);
 
   const uploadUserImage = async (file) => {
     const formData = new FormData();
@@ -31,9 +31,37 @@ function Account() {
     const data = await res.json();
   };
 
-  const avatarImageUrl = userDetails.avatarImage
-    ? "http://localhost:3005/user-image/" + userDetails._id
-    : "http://localhost:3000/images/defaultImg.png";
+  // Fetch and display the user's image
+  const fetchUserImage = async () => {
+    if (userDetails) {
+      const userId = userDetails._id;
+
+      try {
+        const response = await fetch(
+          `http://localhost:3005/user-image/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+
+        // Set the userImage state with the fetched image URL
+        setUserImage(imageUrl);
+      } catch (error) {
+        console.error("Error fetching user image:", error);
+      }
+    } else {
+      // Handle the case where userDetails is null or undefined
+      console.error("userDetails is null or undefined");
+    }
+  };
+
+  // Call the fetchUserImage function to retrieve and set the user's image
+  useEffect(() => {
+    fetchUserImage();
+  }, []);
 
   return (
     <div className="layout h-full">
@@ -52,11 +80,9 @@ function Account() {
           <span className="text-gray-600">{userDetails.userName}</span>
           <div className="w-full p-8 mx-2 justify-center">
             <div className="w-32 h-32 rounded-full overflow-hidden border">
-              <Image
+              <img
                 className="object-cover w-full h-full"
-                src={avatarImageUrl}
-                width={50}
-                height={50}
+                src={userImage || "/images/defaultImg.png"}
                 alt="User Image"
               />
             </div>

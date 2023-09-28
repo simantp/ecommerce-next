@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
 
 const AddCategorySchema = Yup.object().shape({
   name: Yup.string().required("Required"),

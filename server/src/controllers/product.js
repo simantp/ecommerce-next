@@ -11,10 +11,10 @@ const addNewProduct = async (req, res) => {
   try {
     const imageUrl = `/uploads/products/${req.file.filename}`;
 
-    const { name, description, price, slug, category } = req.body;
+    const { title, description, price, slug, category } = req.body;
 
     const newProduct = {
-      name,
+      title,
       description,
       price,
       slug,

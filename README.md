@@ -12,6 +12,7 @@ USER
 2. Upload Files
 3. Payment
 4. Checkout
+   ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/0.png)
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/1.png)
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/2.png)
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/3.png)
