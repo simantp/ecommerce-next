@@ -9,10 +9,16 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: [true],
-    default: "customer",
     enum: ["customer", "admin"],
+    default: "customer",
   },
   avatarImage: { type: String },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  country: { type: String, default: "Nepal", required: true },
+  streetAddress: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);

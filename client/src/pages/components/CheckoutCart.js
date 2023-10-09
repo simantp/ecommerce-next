@@ -1,8 +1,10 @@
 import FormattedPrice from "./FormattedPrice";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-const CartPayment = () => {
+const CheckoutCart = () => {
+  const router = useRouter();
   const { cartList } = useSelector((state) => state.product);
   const [totalAmount, setTotalAmount] = useState(0);
   useEffect(() => {
@@ -27,12 +29,15 @@ const CartPayment = () => {
       </p>
 
       <div className="flex flex-col items-center">
-        <button className="w-full h-10 text-sm font-semibold  text-white bg-gray-500 rounded-lg hover:bg-gray-300  hover:text-black duration-300">
-          Proceed to Buy
+        <button
+          onClick={() => router.push(`/checkout?totalAmount=${totalAmount}`)}
+          className="w-full p-4 text-white bg-gray-500 rounded-lg hover:bg-gray-300  hover:text-black"
+        >
+          Proceed to Checkout
         </button>
       </div>
     </div>
   );
 };
 
-export default CartPayment;
+export default CheckoutCart;

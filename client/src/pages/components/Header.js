@@ -99,7 +99,7 @@ function Header() {
             <p className="link hidden lg:inline-flex">How to Order</p>
           </div>
           {/* right */}
-          <div className="text-white items-center">
+          <div className="text-white px-4 items-center">
             <div className="flex justify-center items-center text-xs sm:text-base space-x-5 p-2 pl-6">
               {!isLoggedIn ? (
                 <Link href="/signin">

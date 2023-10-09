@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import CartProduct from "../components/CartProduct";
 import Link from "next/link";
-import CartPayment from "../components/CartPayment";
+import CheckoutCart from "../components/CheckoutCart";
 
 function Cart() {
   const { cartList } = useSelector((state) => state.product);
@@ -24,7 +24,7 @@ function Cart() {
             </div>
           </div>
           <div className="bg-white h-64 col-span-1 p-4 rounded-lg flex items-center justify-center">
-            <CartPayment />
+            <CheckoutCart />
           </div>
         </>
       ) : (
