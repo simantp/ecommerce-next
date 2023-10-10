@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         theme_blue: {
           light: "#232F3E",
-          DEFAULT: "#131921",
+          default: "#131921",
         },
       },
     },

@@ -13,12 +13,12 @@ const userSchema = new Schema({
     default: "customer",
   },
   avatarImage: { type: String },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  country: { type: String, default: "Nepal", required: true },
-  streetAddress: { type: String, required: true },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
+  country: { type: String, default: "Nepal" },
+  streetAddress: { type: String },
+  city: { type: String },
+  state: { type: String },
 });
 
 const User = mongoose.model("User", userSchema);

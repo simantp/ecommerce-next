@@ -63,7 +63,7 @@ export default function Register() {
               <Form className="space-y-6" method="post">
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Name
+                    User Name
                   </label>
                   <Field
                     name="userName"
