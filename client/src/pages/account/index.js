@@ -17,9 +17,9 @@ function Account() {
       onClick={() => renderComponent(component, label)}
       className={`mb-3 ${
         label === activeButton
-          ? "bg-theme_blue-light"
+          ? "bg-theme_blue-light text-white"
           : "bg-white text-theme_blue-light hover:bg-theme_blue-light hover:text-white"
-      } text-white font-bold py-2 px-4 rounded`}
+      } text-theme_blue-light font-bold py-2 px-4 rounded`}
     >
       {label}
     </button>

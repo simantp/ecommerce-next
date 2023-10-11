@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducerSlices/userSlice";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 function Header() {
   const router = useRouter();
