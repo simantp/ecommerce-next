@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import cartList from "../reducerSlices/productSlice";
 
 export const initialState = {
   token: "",
   userDetails: {},
   isLoggedIn: false,
   avatarImage: {},
-  cartList: [],
 };
 
 const userSlice = createSlice({

@@ -19,6 +19,7 @@ const userSchema = new Schema({
   streetAddress: { type: String },
   city: { type: String },
   state: { type: String },
+  orderData: [{ type: Object }],
 });
 
 const User = mongoose.model("User", userSchema);

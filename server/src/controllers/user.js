@@ -71,6 +71,28 @@ const updateUsersByID = async (req, res) => {
   }
 };
 
+const updateOrderByID = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const orderData = req.body.orderData;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { orderData },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ msg: "User Updated", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update user" });
+  }
+};
+
 const loginUser = async (req, res) => {
   const userExists = await User.findOne({ email: req.body.email });
   if (!userExists) {
@@ -122,4 +144,5 @@ module.exports = {
   updateUsersByID,
   uploadImage,
   getUserImage,
+  updateOrderByID,
 };

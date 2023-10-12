@@ -2,10 +2,12 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { changeUserDetails } from "../../redux/reducerSlices/userSlice";
+import { clearCart } from "../../redux/reducerSlices/productSlice";
 import CartProduct from "../components/CartProduct";
 import FormattedPrice from "../components/FormattedPrice";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const AccountEditSchema = Yup.object().shape({
   phoneNumber: Yup.number().required("Required"),
@@ -19,6 +21,7 @@ const AccountEditSchema = Yup.object().shape({
 });
 
 export default function Checkout() {
+  const router = useRouter();
   const { cartList } = useSelector((state) => state.product);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { userDetails } = useSelector((state) => state.user);
@@ -59,6 +62,41 @@ export default function Checkout() {
     setTotalAmount(amt);
   }, [cartList]);
 
+  const handleCheckout = async () => {
+    if (selectedPaymentMethod === "cash") {
+      const orderData = cartList.map((item) => ({
+        productId: item._id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+        totalAmount: totalAmount,
+      }));
+
+      try {
+        const response = await fetch(
+          `http://localhost:3005/order/${userDetails._id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderData }),
+          }
+        );
+
+        if (response.status === 200) {
+          alert("Order placed successfully.");
+          dispatch(clearCart());
+          router.push("/");
+        } else {
+          console.error("Failed to update order data.");
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    } else {
+      console.log("Payment method not supported.");
+    }
+  };
+
   return (
     <div className="layout py-5 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
       <div className="lg:col-span-3 mt-15 px-5">
@@ -86,14 +124,14 @@ export default function Checkout() {
           <div className="bg-white rounded-lg shadow-lg p-5">
             <Formik
               initialValues={{
-                phoneNumber: userDetails.phoneNumber,
-                email: userDetails.email,
-                firstName: userDetails.firstName,
-                lastName: userDetails.lastName,
-                country: userDetails.country,
-                streetAddress: userDetails.streetAddress,
-                city: userDetails.city,
-                state: userDetails.state,
+                phoneNumber: userDetails?.phoneNumber,
+                email: userDetails?.email,
+                firstName: userDetails?.firstName,
+                lastName: userDetails?.lastName,
+                country: userDetails?.country,
+                streetAddress: userDetails?.streetAddress,
+                city: userDetails?.city,
+                state: userDetails?.state,
               }}
               validationSchema={AccountEditSchema}
               onSubmit={(values) => {
@@ -353,24 +391,6 @@ export default function Checkout() {
                         Cash On Delivery
                       </label>
                     </div>
-                    <div className="flex items-center gap-x-3">
-                      <input
-                        id="card"
-                        name="paymentMethod"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        value="card"
-                        onChange={(e) => {
-                          setSelectedPaymentMethod(e.target.value);
-                        }}
-                      />
-                      <label
-                        htmlFor="card"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Card
-                      </label>
-                    </div>
                   </div>
                 </fieldset>
               </div>
@@ -400,12 +420,15 @@ export default function Checkout() {
           {isLoggedIn && (
             <Link href="#">
               <button
-                className={`w-full p-3 h-10 text-sm font-semibold  text-white bg-blue-500 rounded-lg hover:bg-gray-300  hover:text-black duration-300 ${
-                  !shipToThisAddress || !selectedPaymentMethod
+                onClick={handleCheckout}
+                className={`w-full p-3 h-10 text-sm font-semibold  text-white bg-blue-500 rounded-lg hover:bg-gray-300 hover:text-black duration-300 ${
+                  !shipToThisAddress || selectedPaymentMethod !== "cash"
                     ? "bg-gray-400 cursor-not-allowed"
                     : ""
                 }`}
-                disabled={!shipToThisAddress || !selectedPaymentMethod}
+                disabled={
+                  !shipToThisAddress || selectedPaymentMethod !== "cash"
+                }
               >
                 Proceed to Payment
               </button>

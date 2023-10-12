@@ -1,5 +1,4 @@
-Register / Login / Google Authentication
-
+Register / Login /
 ADMIN
 
 1. Product Management
@@ -9,9 +8,8 @@ ADMIN
 USER
 
 1. Buy Products
-2. Upload Files
-3. Payment
-4. Checkout
+2. Payment
+3. Checkout
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/0.png)
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/1.png)
    ![alt text](https://github.com/simantp/ecommerce-next/blob/main/client/public/screenshot/2.png)

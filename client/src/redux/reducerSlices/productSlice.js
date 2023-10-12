@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   cartList: [],
   cartToatalQuantity: 0,
-  cartTotalAMount: 0,
-  orderData: [],
+  cartTotalAmount: 0,
   userDetails: null,
+  isLoggedIn: false,
 };
 
 const productSlice = createSlice({
@@ -40,6 +40,11 @@ const productSlice = createSlice({
         existingItem.quantity--;
       }
     },
+    clearCart: (state) => {
+      return {
+        cartList: [],
+      };
+    },
     deleteProduct: (state, action) => {
       state.cartList = state.cartList.filter(
         (item) => item._id !== action.payload
@@ -64,6 +69,7 @@ export const {
   deleteProduct,
   saveOrder,
   addUser,
+  clearCart,
   deleteUser,
 } = productSlice.actions;
 export default productSlice.reducer;

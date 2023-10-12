@@ -21,6 +21,7 @@ router.post("/register", UserController.registerNewUser);
 router.post("/signin", UserController.loginUser);
 
 router.put("/account/:id", UserController.updateUsersByID);
+router.put("/order/:id", UserController.updateOrderByID);
 
 router.post(
   "/user-image/:id",
