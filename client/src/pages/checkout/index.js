@@ -69,25 +69,25 @@ export default function Checkout() {
         title: item.title,
         price: item.price,
         quantity: item.quantity,
-        totalAmount: totalAmount,
       }));
 
       try {
-        const response = await fetch(
-          `http://localhost:3005/order/${userDetails._id}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ orderData }),
-          }
-        );
+        const response = await fetch("http://localhost:3005/order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: userDetails._id,
+            orderList: orderData,
+            total: totalAmount,
+          }),
+        });
 
         if (response.status === 200) {
           alert("Order placed successfully.");
           dispatch(clearCart());
           router.push("/");
         } else {
-          console.error("Failed to update order data.");
+          console.error("Failed to create a new order.");
         }
       } catch (error) {
         console.error("API request error:", error);

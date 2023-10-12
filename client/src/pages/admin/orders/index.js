@@ -1,33 +1,22 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-const OrderDetails = () => {
-  const [orders, setOrders] = useState([]);
-  const { userDetails } = useSelector((state) => state.user);
+function allOrders() {
+  const [orderList, setOrderList] = useState([]);
 
-  const fetchUserOrders = async () => {
-    try {
-      const res = await fetch(`http://localhost:3005/order/${userDetails._id}`);
-      const data = await res.json();
-
-      if (Array.isArray(data) && data.length > 0 && data[0].orders) {
-        setOrders(data[0].orders);
-      } else {
-        setOrders([]);
-      }
-    } catch (error) {
-      console.error("Error fetching user orders:", error);
-    }
+  const fetchOrderList = async (values) => {
+    const res = await fetch("http://localhost:3005/order");
+    const data = await res.json();
+    setOrderList(data);
   };
 
   useEffect(() => {
-    fetchUserOrders();
-  }, [userDetails._id]);
+    fetchOrderList();
+  }, []);
 
   return (
     <>
       <div className="mt-5">
-        {orders.map((order, index) => (
+        {orderList.map((order, index) => (
           <div
             key={index}
             className="my-8 overflow-auto rounded-lg shadow md:block"
@@ -74,6 +63,6 @@ const OrderDetails = () => {
       </div>
     </>
   );
-};
+}
 
-export default OrderDetails;
+export default allOrders;
