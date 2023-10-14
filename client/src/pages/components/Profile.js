@@ -35,7 +35,6 @@ function Profile() {
     const data = await res.json();
   };
 
-  // Fetch and display the user's image
   const fetchUserImage = async () => {
     if (userDetails) {
       const userId = userDetails._id;
@@ -51,18 +50,15 @@ function Profile() {
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
 
-        // Set the userImage state with the fetched image URL
         setUserImage(imageUrl);
       } catch (error) {
         console.error("Error fetching user image:", error);
       }
     } else {
-      // Handle the case where userDetails is null or undefined
       console.error("userDetails is null or undefined");
     }
   };
 
-  // Call the fetchUserImage function to retrieve and set the user's image
   useEffect(() => {
     fetchUserImage();
   }, [userDetails]);

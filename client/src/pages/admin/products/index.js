@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function allProducts() {
+  const router = useRouter();
   const [productList, setProductList] = useState([]);
 
   const fetchProductList = async (values) => {
@@ -38,6 +40,12 @@ function allProducts() {
       <div>
         <div className="p-5 h-screen bg-gray-100">
           <h1 className="text-xl mb-2">All Products</h1>
+          <button
+            onClick={() => router.push("/admin/products/create")}
+            className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
+          >
+            ADD PRODUCT
+          </button>
 
           <div className="overflow-auto rounded-lg shadow md:block">
             <table className="w-full">
@@ -54,9 +62,6 @@ function allProducts() {
                   </th>
                   <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Price
-                  </th>
-                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                    Actions
                   </th>
                 </tr>
               </thead>
@@ -81,10 +86,6 @@ function allProducts() {
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       ${item.price}
-                    </td>
-                    <td className="p-3 text-gray-700 whitespace-nowrap">
-                      <p>Edit</p>
-                      <p>Delete</p>
                     </td>
                   </tr>
                 </tbody>

@@ -4,6 +4,9 @@ import { addToCart } from "../../redux/reducerSlices/productSlice";
 
 export default function ProductCard({ productData }) {
   const dispatch = useDispatch();
+  const showAlert = () => {
+    alert("Item added to the cart");
+  };
 
   return (
     <>
@@ -15,7 +18,7 @@ export default function ProductCard({ productData }) {
           <Link
             className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
             href={{
-              pathname: `product/${slug}`,
+              pathname: `product/${_id}`,
             }}
           >
             <img
@@ -27,7 +30,7 @@ export default function ProductCard({ productData }) {
           <div className="flex flex-col items-center mt-4 px-5 pb-5">
             <Link
               href={{
-                pathname: `product/${slug}`,
+                pathname: `product/${_id}`,
               }}
             >
               <h5 className="text-xl tracking-tight font-bold text-slate-900">
@@ -36,11 +39,11 @@ export default function ProductCard({ productData }) {
             </Link>
             <div className="mt-2 mb-5 flex items-center">
               <p>
-                <span className="text-2xl text-slate-900">${price}</span>
+                <span className="text-2xl text-slate-900">Rs {price}</span>
               </p>
             </div>
             <button
-              onClick={() =>
+              onClick={() => {
                 dispatch(
                   addToCart({
                     _id: _id,
@@ -49,8 +52,9 @@ export default function ProductCard({ productData }) {
                     productImagePath: productImagePath,
                     quantity: 1,
                   })
-                )
-              }
+                );
+                showAlert();
+              }}
               className="rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
             >
               Add to Cart

@@ -49,8 +49,11 @@ const getAllOrder = async (req, res) => {
   }
 };
 
+const updateOrderStatus = async (req, res) => {};
+
 module.exports = {
   addNewOrder,
   getOrder,
   getAllOrder,
+  updateOrderStatus,
 };

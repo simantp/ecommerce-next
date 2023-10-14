@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 function allCategories() {
   const [categoryList, setCategoryList] = useState([]);
+  const router = useRouter();
 
   const fetchCategoryList = async (values) => {
     const res = await fetch("http://localhost:3005/categories");
@@ -18,6 +20,12 @@ function allCategories() {
       <div>
         <div className="p-5 h-screen bg-gray-100">
           <h1 className="text-xl mb-2">All Categories</h1>
+          <button
+            onClick={() => router.push("/admin/category/create")}
+            className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
+          >
+            ADD CATEGORY
+          </button>
 
           <div className="overflow-auto rounded-lg shadow md:block">
             <table className="w-full">
@@ -28,9 +36,6 @@ function allCategories() {
                   </th>
                   <th className="p-3 text-sm font-semibold tracking-wide text-left">
                     Slug
-                  </th>
-                  <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                    Actions
                   </th>
                 </tr>
               </thead>
@@ -43,14 +48,6 @@ function allCategories() {
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
                         {item.slug}
-                      </span>
-                    </td>
-                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
-                        Edit
-                      </span>
-                      <span className="p-1.5 text-xs font-medium tracking-wider text-green-800 rounded-lg">
-                        Delete
                       </span>
                     </td>
                   </tr>

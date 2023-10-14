@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const AddProductSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
@@ -13,6 +14,7 @@ const AddProductSchema = Yup.object().shape({
 });
 
 export default function AddProduct() {
+  const router = useRouter();
   const [categories, setCategories] = useState([]);
   const [file, setFile] = useState(null);
 
@@ -55,6 +57,7 @@ export default function AddProduct() {
     } catch (error) {
       console.error("Error creating product:", error);
     }
+    router.push("/admin/products");
   };
 
   return (

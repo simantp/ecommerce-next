@@ -5,6 +5,7 @@ export const initialState = {
   userDetails: {},
   isLoggedIn: false,
   avatarImage: {},
+  cartList: [],
 };
 
 const userSlice = createSlice({
@@ -13,7 +14,6 @@ const userSlice = createSlice({
   reducers: {
     setLoginDetails: (state, actions) => {
       const { token, isLoggedIn, userInfo } = actions.payload;
-      //const { password, ...userInfoWithoutPassword } = userInfo;
       return {
         ...state,
         token,

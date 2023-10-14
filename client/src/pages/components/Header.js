@@ -14,6 +14,7 @@ function Header() {
   const { cartList } = useSelector((state) => state.product);
 
   const toast = useToast();
+
   const logOut = () => {
     const logoutData = {
       msg: "You have been logged out.",
@@ -21,7 +22,7 @@ function Header() {
 
     dispatch(logout(logoutData)).catch((error) => {
       console.error(error);
-      // Display an error message to the user.
+
       toast({
         title: "Logout Failed",
         description: "An error occurred while logging out.",
@@ -31,6 +32,7 @@ function Header() {
       });
     });
   };
+
   const avatarImageUrl = userDetails?.avatarImage
     ? "http://localhost:3005/user-image/" + userDetails._id
     : "http://localhost:3000/images/defaultImg.png";

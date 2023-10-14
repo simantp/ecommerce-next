@@ -1,4 +1,5 @@
 import { Formik, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import * as Yup from "yup";
 
 const AddCategorySchema = Yup.object().shape({
@@ -7,13 +8,15 @@ const AddCategorySchema = Yup.object().shape({
 });
 
 export default function AddCategory() {
-  const createProduct = async (values) => {
+  const router = useRouter();
+  const createCategory = async (values) => {
     const res = await fetch("http://localhost:3005/addcategory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const data = await res.json();
+    router.push("/admin/category");
   };
 
   return (
@@ -33,7 +36,7 @@ export default function AddCategory() {
             }}
             validationSchema={AddCategorySchema}
             onSubmit={async (values, { resetForm }) => {
-              await createProduct(values);
+              await createCategory(values);
               resetForm();
             }}
           >
