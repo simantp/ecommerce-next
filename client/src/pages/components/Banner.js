@@ -20,7 +20,7 @@ function Banner() {
             loading="lazy"
             src="/images/banner1.png"
             width={1200}
-            height={100}
+            height={80}
             alt="banner1"
           />
         </div>

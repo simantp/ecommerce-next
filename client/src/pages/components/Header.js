@@ -3,15 +3,22 @@ import { RiShoppingBag3Fill } from "react-icons/ri";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/reducerSlices/userSlice";
+import { clearCart } from "../../redux/reducerSlices/productSlice";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 function Header() {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { userDetails } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.product);
+
+  const handleSearch = () => {
+    router.push(`/search?q=${searchQuery}`);
+  };
 
   const toast = useToast();
 
@@ -20,17 +27,8 @@ function Header() {
       msg: "You have been logged out.",
     };
 
-    dispatch(logout(logoutData)).catch((error) => {
-      console.error(error);
-
-      toast({
-        title: "Logout Failed",
-        description: "An error occurred while logging out.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    });
+    dispatch(clearCart());
+    dispatch(logout());
   };
 
   const avatarImageUrl = userDetails?.avatarImage
@@ -58,8 +56,15 @@ function Header() {
         <div className="hidden lg:flex">
           <div className="join w-[30rem]">
             <input
-              className="input w-full imput-sm input-bordered"
+              className="input w-full input-sm input-bordered"
               placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
             />
           </div>
         </div>
@@ -95,10 +100,6 @@ function Header() {
         <div className="layout flex justify-between">
           <div className="flex justify-start text-white items-center text-xs sm:text-base space-x-5 p-2 pl-6">
             <p className="link">All Products</p>
-            <p className="link">About</p>
-            <p className="link">Sale</p>
-            <p className="link hidden lg:inline-flex">Process</p>
-            <p className="link hidden lg:inline-flex">How to Order</p>
           </div>
           {/* right */}
           <div className="text-white px-4 items-center">
@@ -108,17 +109,8 @@ function Header() {
                   <p className="link">Sign In</p>
                 </Link>
               ) : (
-                <p className="hidden lg:inline-flex">
-                  <span
-                    onClick={() => {
-                      dispatch(logout());
-                      router.push("/");
-                    }}
-                    className="link"
-                  >
-                    {" "}
-                    Sign Out
-                  </span>
+                <p className="hidden lg:inline-flex link" onClick={logOut}>
+                  Sign Out
                 </p>
               )}
             </div>
