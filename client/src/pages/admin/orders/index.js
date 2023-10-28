@@ -26,9 +26,15 @@ function allOrders() {
         >
           <div>
             <h2>User Information</h2>
-            <p>User Name: {user.user.userName}</p>
+            <p>First Name: {user.user.firstName}</p>
+            <p>Last Name: {user.user.lastName}</p>
             <p>Phone Number: {user.user.phoneNumber}</p>
             <p>Email: {user.user.email}</p>
+            <p className=" font-semibold">Address:</p>
+            <p>{user.user.streetAddress}</p>
+            <p>{user.user.city}</p>
+            <p>{user.user.state}</p>
+            <p>{user.user.country}</p>
           </div>
 
           {user.orders.map((order, orderIndex) => (
